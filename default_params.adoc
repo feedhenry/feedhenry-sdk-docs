@@ -30,7 +30,6 @@ Some SDKs can provide this meta data as request headers. In this case, the name 
 * JavaScript SDK
 ** Cordova
 ** Web Apps
-** Appcelerator
 * Android SDK
 * iOS Objective-C SDK
 * iOS Swift SDK

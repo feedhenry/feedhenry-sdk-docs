@@ -12,7 +12,6 @@ The Sync client uses events to notify the app when data state has changed, such 
 
 * JavaScript SDK
 ** Cordova
-** Appcelerator
 ** Web Apps
 * Android SDK
 * iOS Objective-C SDK

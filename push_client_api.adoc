@@ -15,7 +15,6 @@ Register with the server to start receiving push notifications.
 
 * JavaScript SDK
 ** Cordova
-** Appcelerator
 * Android SDK
 * iOS Objective-C SDK
 * iOS Swift SDK
