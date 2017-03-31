@@ -63,3 +63,51 @@ To understand performance of the server, you can use the sync stats endpoint to 
 
 To summarise, you can use the sync frequency value to control the number of requests the server will generate to your backend.
 It is perfectly fine to set it to 0, as long as the backend can handle the load, and the server itself is not over-loaded.
+
+== Configuring the Workers
+
+As described in the link:./sync_server_architecture.adoc[Sync Architecture], there are a few queues are being used to store the sync data.
+To process these data, a corresponding worker is created for each queue.
+Its sole task is to take a job off the queue one at a time and process it. 
+However, there is an interval value to decide how fast each worker can run.
+To maximise the worker performance, you can configure this value.
+
+=== Why the intervals?
+
+Because the way how queues are implemented, the request to get a job off the queue is a non-blocking operation.
+So when there is no jobs left on the queue, the request will just return with nothing and the worker will go on to get the next one.
+
+This means if there are no jobs on the queue, or the jobs are very fast to complete, a worker will overload the main event loop and prevents anything else from being executed.
+To prevent that from happening, an interval value is introduced for each worker.
+
+However, the defaults of those interval values are very low (1ms). 
+This is due the fact that normally it will take some time for each job to be processed, and that normally each job involves some I/O operations (remote HTTP calls, DB calls etc) which will allow other operations to be completed on the main event loop.
+The low defaults will allow the jobs to be processed as quickly as possible.
+When there are no jobs, a backoff mechanism will be invoked to make sure the workers will not consume too much resource, as described in the next section.
+
+If the default values are causing too many requests to the backend, or you need to change the default interval value, you can override the following configuration options:
+
+* pendingWorkerInterval
+* ackWorkerInterval
+* syncWorkerInterval
+
+=== Worker Backoff
+
+When there are no jobs left on the queues for the workers to process, in order not to waste system resources, a backoff strategy will be applied to slow down the workers. 
+This will make sure minimum resource will be consumed by the workers if no jobs left to run.
+
+Once there are new jobs put on the queues, the workers will start to process them with the interval settings again.
+
+You can override this behaviour of each worker with the following configuration options:
+
+* pendingWorkerBackoff
+* ackWorkerBackoff
+* syncWorkerBackoff
+
+By default, all workers will use the exponential strategy, but with a max delay value. 
+For mroe information, please check the link:./sync_cloud_api[Sync API Doc].
+
+
+
+
+
