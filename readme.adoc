@@ -1,3 +1,5 @@
+*IMPORTANT: changes to files other than sync_&ast; might be overwritten by updates from base repo*
+
 [[fh-auth]]
 = Auth (fh.auth)
 
