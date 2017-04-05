@@ -1,0 +1,56 @@
+[[fh-sync-invoke]]
+== $fh.sync.invoke
+
+Invoke certain functions of the sync server.
+
+This is useful if you need to invoke those functions programmatically.
+
+=== Usage
+
+[source,javascript]
+----
+$fh.sync.invoke(dataset_id, params, callback)
+----
+
+=== Parameters
+
+==== dataset_id
+* Description: the id of the dataset
+* Type: String
+
+==== *params*
+* Description: Specify the target function name, and also it will be passed to the target function.
+* Type: Object
+* Supported Keys:
+** *fn*
+*** Description: specify the name of the function to invoke. Supported functions including:
+**** _sync_
+**** _syncRecords_
+**** _listCollisions_
+**** _removeCollision_
+*** Type: String
+** Other fields will be vary depending on the target function. Please check the source code for the required fields.
+
+=== Example
+
+[source,javascript]
+----
+var datasetId = "todo";
+var syncRecordsParams = {
+  fn: 'syncRecords',
+  dataset_id: datasetId,
+  query_params: {},
+  clientRecs: {},
+  __fh: {
+    cuid: 'testdeviceid'
+  }
+};
+
+$fh.sync.invoke(datasetId, syncRecordsParams, function(err, syncData) {
+  if (err) {
+    console.error('Failed to call syncRecords due to error', err);
+  } else {
+    console.log('Got sync data', syncData);
+  }
+});
+----

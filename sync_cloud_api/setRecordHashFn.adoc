@@ -1,0 +1,48 @@
+[[fh-sync-setrecordhashfn]]
+== $fh.sync.setRecordHashFn
+
+Define a function that will generate the hash value of a single record.
+This hash value will be used to determine if a record has changed or not.
+
+A default implementation is provided but because it knows nothing about the data, the generation process is relatively complicated.
+It could be slow if the each data record has a relatively complex structure.
+But it may be not necessary if the record already have certain fields that can determine if the record is changed, like version, timestamp etc.
+
+This function will allow you to override the default implementation.
+
+=== Usage
+
+[source,javascript]
+----
+$fh.sync.setRecordHashFn(dataset_id, function generateHash(dataset_id, record){});
+----
+
+=== Parameters
+
+==== dataset_id
+* Description: the id of the dataset
+* Type: String
+
+==== generateHash
+* Description: The function that will be used to generate the hash of a dataset.
+* Type: Function
+* Invoked Parameters:
+** *dataset_id*
+*** Description: the id of the dataset
+*** Type: String
+** *record*
+*** Description: the record
+*** Type: Object
+
+=== Returns
+
+The hash value of the record.
+
+=== Example
+
+[source,javascript]
+----
+$fh.sync.setRecordHashFn("todo", function(dataset_id, record){
+  return record.lastModified;
+});
+----

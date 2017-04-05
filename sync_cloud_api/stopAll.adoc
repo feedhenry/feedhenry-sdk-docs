@@ -1,0 +1,31 @@
+[[fh-sync-stopall]]
+== $fh.sync.stopAll
+
+Stop all the sync process of all the datasets.
+
+=== Usage
+
+[source,javascript]
+----
+$fh.sync.stopAll(callback)
+----
+
+=== Parameters
+
+==== callback
+
+* Description: The callback function.
+* Type: Function
+
+=== Example
+
+[source,javascript]
+----
+$fh.sync.stopAll(function(err){
+  if (err) {
+    console.error('sync stopAll failed due to error', err);
+  } else {
+    console.log('sync stopAll finished successfully');
+  }
+});
+----

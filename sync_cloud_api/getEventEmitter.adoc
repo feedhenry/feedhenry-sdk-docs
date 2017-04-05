@@ -1,0 +1,27 @@
+[[fh-sync-geteventemitter]]
+== $fh.sync.getEventEmitter
+
+Get the event emitter of the sync server. 
+
+It will return the same emitter instance as `$fh.events`.
+
+=== Usage
+
+[source,javascript]
+----
+var emitter = $fh.sync.getEventEmitter();
+----
+
+=== Parameters
+
+None.
+
+=== Example
+
+[source,javascript]
+----
+var emitter = $fh.sync.getEventEmitter();
+emitter.once('sync:ready', function(){
+  //do something here
+});
+----
