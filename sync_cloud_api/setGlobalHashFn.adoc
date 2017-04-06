@@ -1,0 +1,39 @@
+[[fh-sync-setglobalhashfn]]
+== $fh.sync.setGlobalHashFn
+
+Define a function that will calculate the global hash of a dataset.
+The global hash will be used to determine if a dataset has changed or not.
+
+=== Usage
+
+[source,javascript]
+----
+$fh.sync.setGlobalHashFn(dataset_id, function generateHash(dataRecordHashes){});
+----
+
+=== Parameters
+
+==== dataset_id
+* Description: the id of the dataset
+* Type: String
+
+==== generateHash
+* Description: The function that will be used to generate the hash of a dataset.
+* Type: Function
+* Invoked Parameters:
+** *dataRecordHashes*
+*** Description: an array of all the hashes of all the records in the dataset.
+*** Type: Array
+
+=== Returns
+
+The global hash value of the dataset.
+
+=== Example
+
+[source,javascript]
+----
+$fh.sync.setGlobalHashFn("todo", function(dataRecordHashes){
+  return dataRecordHashes.join('');
+});
+----

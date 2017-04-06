@@ -1,0 +1,100 @@
+[[fh-sync-apis]]
+= $fh.sync APIs
+
+The public methods and emitted events of the sync server are listed here.
+
+== Methods
+
+=== Configuration
+
+* link:./sync_cloud_api/setConfig.adoc[$fh.sync.setConfig]
+
+=== Sync Server Lifecycle
+
+You can use the following methods to control the lifecycle of the sync server.
+
+* link:./sync_cloud_api/connect.adoc[$fh.sync.connect]
+* link:./sync_cloud_api/init.adoc[$fh.sync.init]
+* link:./sync_cloud_api/stop.adoc[$fh.sync.stop]
+* link:./sync_cloud_api/stopAll.adoc[$fh.sync.stopAll]
+
+=== Data Handlers
+
+Default data handlers are provided as part of the sync server.
+When using sync in an MBaaS, the default data handlers will use the MBaaS MongoDB.
+The Dataset Backend will be the Cloud App's database.
+
+NOTE: If you are providing your own implementation, you should override *all* CRUDL handlers for a given dataset. This is to prevent unusual behaviour where some Dataset actions happen with default handlers, and some happen with overriden handlers.
+
+The following methods can be used to override data handlers for *all* datasets:
+
+* link:./sync_cloud_api/globalHandleCreate.adoc[$fh.sync.globalHandleCreate]
+* link:./sync_cloud_api/globalHandleRead.adoc[$fh.sync.globalHandleRead]
+* link:./sync_cloud_api/globalHandleUpdate.adoc[$fh.sync.globalHandleUpdate]
+* link:./sync_cloud_api/globalHandleDelete.adoc[$fh.sync.globalHandleDelete]
+* link:./sync_cloud_api/globalHandleList.adoc[$fh.sync.globalHandleList]
+
+The following methods can be used to override data handlers for a given dataset:
+
+* link:./sync_cloud_api/handleCreate.adoc[$fh.sync.handleCreate]
+* link:./sync_cloud_api/handleRead.adoc[$fh.sync.handleRead]
+* link:./sync_cloud_api/handleUpdate.adoc[$fh.sync.handleUpdate]
+* link:./sync_cloud_api/handleDelete.adoc[$fh.sync.handleDelete]
+* link:./sync_cloud_api/handleList.adoc[$fh.sync.handleList]
+
+=== Collision Handlers
+
+Default collision handlers are provided as part of the sync server.
+They will persist collisions in the Cloud App's database.
+
+The following methods can be used to override collision handlers for *all* datasets:
+
+* link:./sync_cloud_api/globalHandleCollision.adoc[$fh.sync.globalHandleCollision]
+* link:./sync_cloud_api/globalListCollisions.adoc[$fh.sync.globalListCollisions]
+* link:./sync_cloud_api/globalRemoveCollision.adoc[$fh.sync.globalRemoveCollision]
+
+The following methods can be used to override collision handlers for a given dataset:
+
+* link:./sync_cloud_api/handleCollision.adoc[$fh.sync.handleCollision]
+* link:./sync_cloud_api/listCollisions.adoc[$fh.sync.listCollisions]
+* link:./sync_cloud_api/removeCollision.adoc[$fh.sync.removeCollision]
+
+=== Hash Functions
+
+Default implementations are provided to generate hash values of records and datasets.
+A record hash is used when comparing a cached record with the latest from the Dataset Backend.
+
+The following methods can be used to override the default implementations:
+
+* link:./sync_cloud_api/setGlobalHashFn.adoc[$fh.sync.setGlobalHashFn]
+* link:./sync_cloud_api/setRecordHashFn.adoc[$fh.sync.setRecordHashFn]
+
+=== Request Interception
+
+These methods can be used to intercept all sync requests before they reach the sync server.
+For example, you may want to add an autentication check by intercepting all sync requests, and reject any unauthorised requests.
+
+* link:./sync_cloud_api/globalInterceptRequest.adoc[$fh.sync.globalInterceptRequest]
+* link:./sync_cloud_api/interceptRequest.adoc[$fh.sync.interceptRequest]
+
+=== Others
+
+* link:./sync_cloud_api/getEventEmitter.adoc[$fh.sync.getEventEmitter]
+* link:./sync_cloud_api/invoke.adoc[$fh.sync.invoke]
+
+== Events
+
+The following events are emitted by the sync server.
+
+* *sync:ready*
++
+This event will be emitted when the sync server is ready, after link:./sync_cloud_api/connect.adoc[$fh.sync.connect] is called.
+
+NOTE: When using the sync server from `fh-mbaas-api`, `sync.connect` is called automatically, and told to use the Cloud App's database. There is no need to call `sync.connect` in this case.
+
+To listen to the event, a listener should be attached to the event emitter. There are 2 ways to do it:
+
+* use link:./sync_cloud_api/getEventEmitter.adoc[$fh.sync.getEventEmitter] method
+* use _$fh.events_ object
+
+
