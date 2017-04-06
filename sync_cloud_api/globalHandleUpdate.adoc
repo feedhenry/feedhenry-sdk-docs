@@ -1,11 +1,11 @@
 [[fh-sync-globalhandleupdate]]
 == $fh.sync.globalHandleUpdate
 
-Defines a global handler function for updating a single row of data on the back end.
+Defines a global handler function for updating a single row of data on the Dataset Backend.
 
 It can be used by multiple datasets, but will only be used if there is no handler assigned to the dataset via the link:./handleUpdate.adoc[handleUpdate API].
 
-The sync server will make sure the data can be updated by checking the current value is matching the value in the back end.
+The sync server will make sure the data can be updated by checking the current value is matching the value in the Dataset Backend.
 If the value doesn't match, the update operation will not be performed and a collision will be generated.
 
 === Usage

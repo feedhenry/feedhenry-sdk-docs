@@ -1,7 +1,7 @@
 [[fh-sync-globalhandleread]]
 == $fh.sync.globalHandleRead
 
-Defines a global handler function for reading a single row of data from the back end.
+Defines a global handler function for reading a single row of data from the Dataset Backend.
 
 It can be used by multiple datasets, but will only be used if there is no handler assigned to the dataset via the link:./handleRead.adoc[handleRead API].
 

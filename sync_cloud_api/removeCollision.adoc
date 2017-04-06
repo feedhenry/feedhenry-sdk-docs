@@ -1,7 +1,7 @@
 [[fh-sync-removecollisions]]
 == $fh.sync.removeCollisions
 
-Defines a handler function for deleting a collisions for a dataset.
+Defines a handler function for deleting a collision for a Dataset.
 
 === Usage
 

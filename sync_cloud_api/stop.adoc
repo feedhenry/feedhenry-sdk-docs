@@ -1,7 +1,7 @@
 [[fh-sync-stop]]
 == $fh.sync.stop
 
-Stop the sync process of the given dataset.
+Stop the syncing a specific Dataset with the Dataset Backend.
 
 === Usage
 

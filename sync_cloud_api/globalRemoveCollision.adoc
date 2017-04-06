@@ -1,7 +1,7 @@
 [[fh-sync-globalremovecollision]]
 == $fh.sync.globalRemoveCollision
 
-Defines a global handler function for deleting a collisions.
+Defines a global handler function for deleting a collision.
 
 It can be used by multiple datasets, but will only be used if there is no handler assigned to the dataset via the link:./removeCollision.adoc[removeCollision API].
 

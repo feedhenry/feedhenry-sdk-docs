@@ -1,7 +1,7 @@
 [[fh-sync-handledelete]]
 == $fh.sync.handleDelete
 
-Defines a handler function for deleting a single row of data from the back end for a dataset.
+Defines a handler function for a specific Dataset, for deleting a single row of data from the Dataset Backend.
 
 The sync server will make sure the data can be deleted. I.e. the data to be deleted is up to date and will not cause collisions.
 

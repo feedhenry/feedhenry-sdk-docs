@@ -1,7 +1,7 @@
 [[fh-sync-listcollisions]]
 == $fh.sync.listCollisions
 
-Defines a handler function for returning the current list of collisions for a dataset.
+Defines a handler function for returning the current list of collisions for a Dataset.
 
 === Usage
 

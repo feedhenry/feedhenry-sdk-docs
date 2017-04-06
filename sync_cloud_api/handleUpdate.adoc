@@ -1,7 +1,7 @@
 [[fh-sync-handleupdate]]
 == $fh.sync.handleUpdate
 
-Defines a handler function for updating a single row of data on the back end for a dataset.
+Defines a handler function for a specific Dataset, for updating a single row of data on the Dataset Backend.
 
 The sync server will make sure the data can be updated by checking the current value is matching the value in the back end.
 If the value doesn't match, the update operation will not be performed and a collision will be generated.

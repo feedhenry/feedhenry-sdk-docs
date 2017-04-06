@@ -1,7 +1,7 @@
 [[fh-sync-globalhandlelist]]
 == $fh.sync.globalHandleList
 
-Defines a global handler function for listing data from the back end.
+Defines a global handler function for listing data from the Dataset Backend.
 
 It can be used by multiple datasets, but will only be used if there is no handler assigned to the dataset via the link:./handleList.adoc[handleList API].
 

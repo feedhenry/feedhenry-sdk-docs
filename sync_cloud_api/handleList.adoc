@@ -1,7 +1,7 @@
 [[fh-sync-handlelist]]
 == $fh.sync.handleList
 
-Defines a handler function for listing data from the back end for a dataset.
+Defines a handler function for a specific Dataset, for listing data from the Dataset Backend.
 
 === Usage
 

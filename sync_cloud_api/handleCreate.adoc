@@ -1,7 +1,7 @@
 [[fh-sync-handlecreate]]
 == $fh.sync.handleCreate
 
-Defines a handler function for creating a single row of data in the back end for a dataset.
+Defines a handler function for a specific Dataset, for creating a single row of data in the Dataset Backend.
 
 === Usage
 

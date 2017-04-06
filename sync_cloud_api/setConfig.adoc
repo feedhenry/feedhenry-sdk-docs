@@ -4,6 +4,8 @@
 Configure the sync server. 
 
 It should be called when the sync server is ready, and before initialising any of the datasets.
+Initialisation of a Dataset typically happen when the first Sync client connects, unless you have explicit calls to `sync.init`.
+Either way, a reasonable location to call `setConfig` is when the `sync:ready` event triggers.
 
 === Usage
 
@@ -21,7 +23,7 @@ $fh.sync.setConfig(options)
 * Supported Keys
 
 ** *pendingWorkerInterval*
-*** Description: Set the interval value for the pending workers. In milliseconds.
+*** Description: Set the interval value for the pending workers, in milliseconds.
 For more details about the worker interval, please see link:./sync_configuration_guide.adoc[Sync Configuration Guide].
 *** Type: Number
 *** Default: 1
@@ -38,7 +40,7 @@ Valid values are `exp` (exponential) and `fib` (fibonacci).
 Set it to anything else will disable it.
 **** max
 +
-The max delay time for the backoff strategy. In milliseconds.
+The max delay time for the backoff strategy, in milliseconds.
 
 ** *pendingWorkerConcurrency*
 *** Description: Set the number of concurrent pending workers.
@@ -47,7 +49,7 @@ Set it to 0 will disable the pending workers.
 *** Default: 1
 
 ** *ackWorkerInterval*
-*** Description: Set the interval value for the ack workers. In milliseconds.
+*** Description: Set the interval value for the ack workers, in milliseconds.
 For more details about the worker interval, please see link:./sync_configuration_guide.adoc[Sync Configuration Guide].
 *** Type: Number
 *** Default: 1
@@ -64,7 +66,7 @@ Valid values are `exp` (exponential) and `fib` (fibonacci).
 Set it to anything else will disable it.
 **** max
 +
-The max delay time for the backoff strategy. In milliseconds.
+The max delay time for the backoff strategy, in milliseconds.
 
 ** *ackWorkerConcurrency*
 *** Description: Set the number of concurrent ack workers.
@@ -73,7 +75,7 @@ Set it to 0 will disable the ack workers.
 *** Default: 1
 
 ** *syncWorkerInterval*
-*** Description: Set the interval value for the sync workers. In milliseconds.
+*** Description: Set the interval value for the sync workers, in milliseconds.
 For more details about the worker interval, please see link:./sync_configuration_guide.adoc[Sync Configuration Guide].
 *** Type: Number
 *** Default: 100
@@ -90,7 +92,7 @@ Valid values are `exp` (exponential) and `fib` (fibonacci).
 Set it to anything else will disable it.
 **** max
 +
-The max delay time for the backoff strategy. In milliseconds.
+The max delay time for the backoff strategy, in milliseconds.
 
 ** *syncWorkerConcurrency*
 *** Description: Set the number of concurrent sync workers.
@@ -113,7 +115,7 @@ The stats data will be saved in Redis and will only have minimum performance ove
 *** Default: 1000
 
 ** *collectStatsInterval*
-*** Description: Determine how often the stats should be collected. In milliseconds.
+*** Description: Determine how often the stats should be collected, in milliseconds.
 *** Type: Number
 *** Default: 5000
 
@@ -141,7 +143,7 @@ This option will decide what messages should be kept in database.
 Other supported units including: _s_ (second), _m_ (minute), _h_ (hour), _d_ (day), _w_ (week), _y_ (year)
 
 ** *queuePruneFrequency*
-*** Description: Decide how often the queues should be checked to remove some of the acknowledged messages. In milliseconds.
+*** Description: Decide how often the queues should be checked to remove some of the acknowledged messages, in milliseconds.
 *** Type: Number
 *** Default: 3600000 (1 hour)
 
@@ -155,7 +157,7 @@ It is an experiment feature. It may cause delay for changes to be visible to all
 *** Default: false
 
 ** *schedulerInterval*
-*** Description: set the interval for the sync scheduler. In milliseconds.
+*** Description: set the interval for the sync scheduler, in milliseconds.
 +
 Should not need to be changed in most cases.
 *** Type: Number

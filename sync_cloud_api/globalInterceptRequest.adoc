@@ -1,7 +1,7 @@
 [[fh-sync-globalinterceptrequest]]
 == $fh.sync.globalInterceptRequest
 
-Intercept the sync requests before it's being processed.
+Intercept *all* sync requests before they are passed to the sync server.
 Can be useful for checking client identities and validating authentication.
 
 It can be used by multiple datasets, but will only be used if there is no handler assigned to the dataset via the link:./interceptRequest.adoc[interceptRequest API].

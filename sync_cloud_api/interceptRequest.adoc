@@ -1,7 +1,7 @@
 [[fh-sync-interceptrequest]]
 == $fh.sync.interceptRequest
 
-Intercept the sync requests for a dataset before it's being processed.
+Intercept the sync requests for a specific Dataset before it's being processed.
 Can be useful for checking client identities and validating authentication.
 
 === Usage
@@ -14,7 +14,7 @@ $fh.sync.interceptRequest(dataset_id, function requestInterceptor(dataset_id, in
 === Parameters
 
 ==== dataset_id
-* Description: the id of the dataset
+* Description: the id of the Dataset
 * Type: String
 
 ==== requestInterceptor
@@ -22,7 +22,7 @@ $fh.sync.interceptRequest(dataset_id, function requestInterceptor(dataset_id, in
 * Type: Function
 * Invoked Parameters:
 ** *dataset_id*
-*** Description: the id of the dataset
+*** Description: the id of the Dataset
 *** Type: String
 ** *interceptorParams*
 *** Description: the parameters associated with the request

@@ -1,9 +1,12 @@
 [[fh-sync-invoke]]
 == $fh.sync.invoke
 
-Invoke certain functions of the sync server.
+Invoke internal sync functions of the sync server.
 
-This is useful if you need to invoke those functions programmatically.
+This is useful if you need to invoke these functions programmatically.
+However, it is unlikely these will be needed under normal operation.
+This function is whats called by Sync clients.
+Hence the _params_ object is the same as the request body from Sync clients.
 
 === Usage
 

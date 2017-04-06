@@ -1,11 +1,11 @@
 [[fh-sync-init]]
 == $fh.sync.init
 
-Set the sync options for the given dataset and start the sync process.
+Set the sync options for the given Dataset and start the sync process.
 
-Can also be used to restart the sync process on a dataset after it's stopped.
+Can also be used to restart the sync process on a Dataset after it's stopped.
 
-This function call is optional, you don't have to call it if the default option works.
+This function call is optional. However, you may want to call to override options for a specific Dataset.
 
 === Usage
 
@@ -23,24 +23,24 @@ $fh.sync.init(dataset_id, options, callback)
 
 ==== options
 
-* Description: The sync options for the dataset. If not provided, defaults will be used.
+* Description: The sync options for the Dataset. If not provided, defaults will be used.
 * Type: Object
 * Supported Keys:
 ** *syncFrequency*
-*** Description: Specify how long the sync server should wait between each operation which will sync local datasets with the Backend Database. In seconds.
+*** Description: Specify how long the sync server should wait between each operation which will sync local Datasets with the Backend Database. In seconds.
 +
 To decide the right value for this option, please check link:./sync_performance_scaling_guide.adoc[Sync Performance and Scaling Guide]
 *** Type: Number
 *** Default: 30
 
 ** *clientSyncTimeout*
-*** Description: Specify the period of time for which if a dataset client hasn't been accessed by any user, the dataset client will be marked as "inactive". In seconds.
+*** Description: Specify the period of time for which if a Dataset client hasn't been accessed by any user, the Dataset client will be marked as "inactive". In seconds.
 +
-If a dataset client is marked as "inactive", the sync server will stop syncing the data of the dataset client with the backend.
+If a Dataset client is marked as "inactive", the sync server will stop syncing the data of the Dataset client with the backend.
 +
-This means if a user access an "inacitve" dataset client again later on, the user may get stalled data until the next sync operation is completed.
+This means if a user access an "inacitve" Dataset client again later on, the user may get stalled data until the next sync operation is completed.
 +
-To avoid that, you can set it to a relatively long value so that a dataset client is only marked as "inactive" when no user has accessed it for a long period.
+To avoid that, you can set it to a relatively long value so that a Dataset client is only marked as "inactive" when no user has accessed it for a long period.
 
 *** Type: Number
 *** Default: 3600 (1 hour)

@@ -1,7 +1,7 @@
 [[fh-sync-handleread]]
 == $fh.sync.handleRead
 
-Defines a handler function for reading a single row of data from the back end for a dataset.
+Defines a handler function for a specific Dataset, for reading a single row of data from the Dataset Backend.
 
 === Usage
 

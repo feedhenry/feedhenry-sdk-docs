@@ -3,7 +3,7 @@
 
 Get the event emitter of the sync server. 
 
-It will return the same emitter instance as `$fh.events`.
+If using sync from `fh-mbaas-api`, it will return the same emitter instance as `$fh.events`.
 
 === Usage
 

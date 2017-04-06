@@ -1,7 +1,7 @@
 [[fh-sync-setglobalhashfn]]
 == $fh.sync.setGlobalHashFn
 
-Define a function that will generate the global hash of a dataset.
+Define a function that will calculate the global hash of a dataset.
 The global hash will be used to determine if a dataset has changed or not.
 
 === Usage

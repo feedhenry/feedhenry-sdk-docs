@@ -2,10 +2,13 @@
 == $fh.sync.setRecordHashFn
 
 Define a function that will generate the hash value of a single record.
-This hash value will be used to determine if a record has changed or not.
+A record hash is used when comparing a cached record with the latest from the Dataset Backend.
 
-A default implementation is provided but because it knows nothing about the data, the generation process is relatively complicated.
-It could be slow if each data record has a relatively complex structure, and the process could be avoided if the record already have certain fields that will indicate if the record is changed, like version, timestamp etc.
+If the hash matches, the records are assumed to be the same (so no need to update the cache or clients).
+The default implementation takes a conservative approach by doing a sorted stringification of the record, and calculates a sha-1 of it.
+
+However, you may want to override this to save on CPU time.
+For example, if your records have a version or lastModified field, that may suffice as a hash value to indicate if a record has changed or not.
 
 This function will allow you to override the default implementation.
 

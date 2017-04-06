@@ -1,9 +1,9 @@
 [[fh-sync-connect]]
 == $fh.sync.connect
 
-Make sure the sync server is connected to the requried dependent resources, like MongoDB and Redis.
+Make sure the sync server is connected to the requried dependent resources i.e. MongoDB and Redis.
 
-NOTE: You don't need to invoke this if you are using the fh-mbaas-api module in your app, it will be called automatically.
+NOTE: When using the sync server from `fh-mbaas-api`, `sync.connect` is called automatically, and told to use the Cloud App's database. There is no need to call `sync.connect` in this case.
 
 === Usage
 
@@ -15,7 +15,7 @@ $fh.sync.connect(mongodbConnectionString, mongodbConf, redisConnectionString, ca
 === Parameters
 
 ==== mongodbConnectionString
-* Description: The connection url of MongoDB
+* Description: The connection url of MongoDB. The url is passed straight to the `mongodb` module.
 * Type: String
 
 ==== mongodbConf
@@ -31,7 +31,7 @@ However, you can still control some of the MongoDB connection options via enviro
 * Type: Object
 
 ==== redisConnectionString
-* Description: The connection url of Redis. Should include authentication info if required.
+* Description: The connection url of Redis. Should include authentication info if required. The url is passed straight to the `redis` module.
 * Type: String
 
 ==== callback

@@ -1,11 +1,11 @@
 [[fh-sync-globalhandledelete]]
 == $fh.sync.globalHandleDelete
 
-Defines a global handler function for deleting a single row of data from the back end.
+Defines a global handler function for deleting a single row of data from the Dataset Backend.
 
 It can be used by multiple datasets, but will only be used if there is no handler assigned to the dataset via the link:./handleDelete.adoc[handleDelete API].
 
-The sync server will make sure the data can be deleted. I.e. the data to be deleted is up to date and will not cause collisions.
+The sync server will make sure the data can be deleted. i.e. the data to be deleted is up to date and will not cause collisions.
 
 === Usage
 

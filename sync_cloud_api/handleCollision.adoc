@@ -1,7 +1,7 @@
 [[fh-sync-handlecollision]]
 == $fh.sync.handleCollision
 
-Defines a handler function for dealing with data collisions for a dataset.
+Defines a handler function for a specific Dataset, for dealing with data collisions.
 
 You can try resolve the collision in this function, or just persist the collision somewhere for later review.
 
