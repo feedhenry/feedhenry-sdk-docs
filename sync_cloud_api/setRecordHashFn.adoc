@@ -5,8 +5,7 @@ Define a function that will generate the hash value of a single record.
 This hash value will be used to determine if a record has changed or not.
 
 A default implementation is provided but because it knows nothing about the data, the generation process is relatively complicated.
-It could be slow if the each data record has a relatively complex structure.
-But it may be not necessary if the record already have certain fields that can determine if the record is changed, like version, timestamp etc.
+It could be slow if each data record has a relatively complex structure, and the process could be avoided if the record already have certain fields that will indicate if the record is changed, like version, timestamp etc.
 
 This function will allow you to override the default implementation.
 

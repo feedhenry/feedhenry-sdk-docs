@@ -101,13 +101,37 @@ In this case, scaling the sync server will not really help, because the bottlene
 
 If you decide to scale the sync server, here are some of the options you can consider:
 
-=== Scaling on Dynofarm
+=== Scaling on Dynofarm (SAAS)
 
-If your app is running on the RHMAP dynofarm (all the SAAS customers are), you can use https://nodejs.org/docs/latest-v4.x/api/cluster.html[Nodejs Clustering] to create more workers.
+There are 2 options to scale the sync server on the RHAMP SAAS platform:
 
-If that's not enough, it is possible to create another app and point it to the same MongoDB to scale even further. 
+==== Use the Node.js Cluster Module
 
-//TODO: Add instruction of how to do that.
+To scale inside a single app, you can use https://nodejs.org/docs/latest-v4.x/api/cluster.html[Nodejs Clustering] to create more workers.
+
+==== Deploy More Apps
+
+Another option is to deploy more apps but point them to the same MongoDB as the existing app. 
+This will allow you to scale the sync server even further.
+
+To do this, you should:
+
+* Deploy a few more apps with the same code as the existing app
+* Find out the MongoDB connection string of the existing app
++
+It should be listed on the *Environment Varaible* screen in the App Studio, looking for a System Environment Variable called _FH_MONGODB_CONN_URL_
+* Copy the value, and create a new environment variable called _SYNC_MONGODB_URL_ in the newly created apps, and paste the MongoDB url as the value.
+* Redeploy the apps.
+
+With this approch, you can separate the HTTP request handling and sync data processing completely.
+
+For example, if there are 2 apps setup like this, App 1 and App 2, and App 1 is the cloud app that will accept HTTP requests. 
+You can then:
+
+* Set the worker concurrencies to 0 to disable all the sync workers in App 1. It will be dedicated to handle HTTP requests
+* Increase the concurrencies of sync workers in App 2, and reduce the sync interval values. It will make sure the sync data is processed as quickly as possible.
+
+Please check link:./sync_cloud_api/setConfig.adoc[$fh.sync.setConfig] for more inforamtion about how to configure the worker concurrencies.
 
 === Scaling on OpenShift
 
