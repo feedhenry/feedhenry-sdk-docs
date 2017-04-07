@@ -13,7 +13,6 @@ The initializations process involves a call to the server to verify that it is a
 * JavaScript SDK
 ** Cordova
 ** Web Apps
-** Appcelerator
 * Android SDK
 * iOS Objective-C SDK
 * iOS Swift SDK

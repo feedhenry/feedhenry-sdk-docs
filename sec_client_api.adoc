@@ -16,7 +16,6 @@ Key pair generation and data encryption and decryption.
 * JavaScript SDK
 ** Cordova
 ** Web Apps
-** Appcelerator
 
 For detailed version information, see link:https://access.redhat.com/node/2357761[Supported Configurations^].
 
