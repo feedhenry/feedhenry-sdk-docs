@@ -158,7 +158,7 @@ This is the same as Step 1 in basic usage
 +
 [source,javascript]
 ----
-var fhapi = require("fh-mbaas-api");
+var fh = require("fh-mbaas-api");
 var datasetId = "myShoppingList";
 
 var options = {
@@ -181,12 +181,14 @@ var datalistHandler = function(dataset_id, query_params, cb, meta_data){
   return cb(null, data);
 }
 
-fhapi.sync.init(datasetId, options, function(err) {
-  if (err) {
-    console.error(err);
-  } else {
-    $fh.sync.handleList(datasetId, datalistHandler);
-  }
+fh.events.on('sync:ready', function() {
+  fh.sync.init(datasetId, options, function(err) {
+    if (err) {
+      console.error(err);
+    } else {
+      fh.sync.handleList(datasetId, datalistHandler);
+    }
+  });
 });
 ----
 +
