@@ -15,13 +15,15 @@ image:sync_flow_chart.png[sync_flow_chart]
 .. A dataset is a map. The key is the universal unique id (UID) of the data record and the value is an instance of data record.
 .. A data record is a map too. It contains 2 keys: data and hash. The data is the actual user data. The hash is the hash value generated from the data. The same user data will result in the same hash value.
 .. At the moment, all the SDKs persist client side dataset as files.
+
 2. Any write operations will result in a pending change. Normally there will be a set of pending changes (ChangeSet) on the client.
 .. The ChangeSet is a map. The keys are the hash values of the instances of Pending Change.
 .. Each Pending Change will be like this:
++
 [source,json]
 ----
 {
-  "uid": <the unique id of the data record. For creation, it’s the hash of the pending record>,
+ "uid": <the unique id of the data record. For creation, it’s the hash of the pending record>,
  "hash": <the hash value of the pending record>,
  "action": <operation type, should be one of create, update or delete>,
  "post": <the updated user data>,
@@ -31,9 +33,12 @@ image:sync_flow_chart.png[sync_flow_chart]
  "timestamp": <when this pending change is generated>
 }
 ----
-3. The sync loop will run at an interval set by the app (the value of sync frequency in the config) or anytime if there are updates (if the auto_sync_local_updates config flag is set to true). During each sync loop, the client SDK will first try to submit all the pending changes that haven’t been submitted before to the cloud via HTTP. 
-Sample Request Body:
 
+3. The sync loop will run at an interval set by the app (the value of sync frequency in the client sync config) or anytime if there are updates (if the auto_sync_local_updates config flag is set to true). 
+During each sync loop, the client SDK will first try to submit all the pending changes that haven’t been submitted before to the cloud via HTTP.
++
+Sample Request Body:
++
 [source,json]
 ----
 {
@@ -96,6 +101,7 @@ Sample Request Body:
   }
 }
 ----
+
 4. Once the server receives the request, it will invoke the function specified in the request body.
 .. For the ‘sync’ function, all the pending changes are added to the pending queue, and the server responds to the client.
 When processing an item from the pending queue, the server will decide if each change can be applied:
@@ -103,7 +109,9 @@ For update and delete, there will be a collision detection: the preHash value in
 If not, the update/delete will not be applied, and a collision will be reported. It is up to the developer to decide how best to handle collisions.
 This is done by implementing the server side collisionHandler function.
 .. The result of processing each pending change will be recorded in the MongoDB of the app.
+
 5. If the pending change should be applied, the sync server will then call the corresponding data handler to apply that change to the Dataset Backend.
+
 6. Processed changes are notified to the client whenever the client next does a sync.
 .. If, for some reason, a sync call with pending updates fails (e.g. a 500 or timeout), the client will mark those updates as 'crashed'.
 The client will try to resend the updates again in the next sync loop.
@@ -113,40 +121,40 @@ The client will try to resend the updates again in the next sync loop.
 ... Process previously pending changes that are failed ("crashed")
 ... Check to see if any of the delayed pending changes can be submitted
 ... Make sure the client dataset contains the correct information
-
++
 The response will be like this:
-
++
 [source,json]
 ----
-	{
-  	  "hash": "61468b040690d5a8ef14568095b887190c80436a",  //the hash value of the same dataset in the cloud. The client will compare it against the client dataset hash to determine if the syncRecords request is required
-              "updates": {  //the results of all the pending changes that have been processed by the cloud app
-                "hashes": {  //a map of hashes of all the processed pending changes and the results
-                  "5a53abb526abd460a552135571f62b732ed34728": {
-                    "cuid": "6C1F4BAFC6EE4D768202B65A7FDEF7DB",
-                    "type": "applied",
-                    "action": "update",
-                    "hash": "5a53abb526abd460a552135571f62b732ed34728",
-                    "uid": "561d56bb176f7e000000000f",
-                    "msg": "''"
-                  }
-               },
-              "applied": { //the pending changes that have been applied. Similarly, there will be other keys called "failed" and "collisions" for those are not applied               
-   "5a53abb526abd460a552135571f62b732ed34728": {
-                "cuid": "6C1F4BAFC6EE4D768202B65A7FDEF7DB",
-                "type": "applied",
-                "action": "update",
-                "hash": "5a53abb526abd460a552135571f62b732ed34728",
-                "uid": "561d56bb176f7e000000000f",
-                "msg": "''"
-            }
-          }
-        }
+{
+  "hash": "61468b040690d5a8ef14568095b887190c80436a",  //the hash value of the same dataset in the cloud. The client will compare it against the client dataset hash to determine if the syncRecords request is required
+  "updates": {  //the results of all the pending changes that have been processed by the cloud app
+    "hashes": {  //a map of hashes of all the processed pending changes and the results
+      "5a53abb526abd460a552135571f62b732ed34728": {
+        "cuid": "6C1F4BAFC6EE4D768202B65A7FDEF7DB",
+        "type": "applied",
+        "action": "update",
+        "hash": "5a53abb526abd460a552135571f62b732ed34728",
+        "uid": "561d56bb176f7e000000000f",
+        "msg": "''"
       }
+    },
+    "applied": { //the pending changes that have been applied. Similarly, there will be other keys called "failed" and "collisions" for those are not applied               
+      "5a53abb526abd460a552135571f62b732ed34728": {
+        "cuid": "6C1F4BAFC6EE4D768202B65A7FDEF7DB",
+        "type": "applied",
+        "action": "update",
+        "hash": "5a53abb526abd460a552135571f62b732ed34728",
+        "uid": "561d56bb176f7e000000000f",
+        "msg": "''"
+      }
+    }
+  }
+}
 ----
 
 7. The client will also compare the current dataset’s hash value and the hash value of the cloud dataset returned in the last step. If the hash values don’t match, the client will invoke another "syncRecords" request. The client will send all the data UIDs in the dataset and their corresponding data hashes. For example:
-
++
 [source,json]
 ----
 {
@@ -176,8 +184,9 @@ The response will be like this:
 
 8. When the cloud receives the request, it will compare the client records with the current records in the cloud, and return the deltas.
 .. The cloud app keeps a copy of the dataset for the client in MongoDB, and periodically sync with the Dataset Backend. The dataset is marked as inactive if there is no activity from the client for a period of time.
++
 Sample response:
-
++
 [source,json]
 ----
 {
@@ -207,7 +216,7 @@ Sample response:
 
 9. When the client receives the response, it will merge the pending changes (user can change data between the time the first request is finished and the second request is finished. Those changes are not submitted to the cloud yet) with the delta, and update the local dataset.
 
-.. If any there any pending changes, remove the corresponding delta from the response as they are not up to date
+.. If there are any pending changes, remove the corresponding delta from the response as they are not up to date
 .. Apply the rest of the delta to the dataset
 .. For those failed or collided pending changes, as described in step 6b, once the client acknowledges that those changes have been processed by the cloud, it will remove those pending changes from the client side change set. Then at this point, it will be either:  
 ... There are no subsequent pending changes based on these failed/collided changes. In this case, the cloud response will be applied to the current dataset for those records immediately and users will see those records are updated to be the value in the cloud.
@@ -285,12 +294,8 @@ The re-submission of the crashed pending changes can be controlled via 2 configu
 * crash_count_wait: how many sync loops it should wait before re-submitting the crashed changes
 * resend_crashed_updates: should the crashed updates be submitted again
 
-The reason why we need to wait before re-submitting the crashed pending changes is unclear at this stage. It might have it’s purpose at the very beginning. But not sure if we still need those now. For example:
-
-* If the failure was caused by network error, then those changes should be re-submitted
-* If the failure was caused by cloud app taking too long to process, if those changes are re-submitted again, the cloud app will see the same pending changes more than once. However, the cloud app will save each processed pending change in the cloud db, and it will look up the table to see if a pending change is already processed (using the hash value of the pending change). This means even if there are multiple submissions for the same pending change, the cloud app will only process it once.
-
-Given the above reasons, the crash_count_wait and resend_crashed_updates options may be deprecated, in favour of always re-submitting crashed pending changes.
+The reason for the dalaying is to avoid causing cascading failures on the server.
+But in most cases, it is not an issue and you should consider always re-submitting crashed pending changes, by setting `crash_count_wait` to 0.
 
 == Delayed Pending Changes
 
@@ -356,6 +361,8 @@ For example, data {a:1, b:2, c:3} will be converted to:
 ----
 
 Then SHA1 hash will be used to generate the hash value.
+
+NOTE: The client side hashing will be deprecated in the future. The hash value of data records and datasets will always be regenerated on the cloud side.
 
 == UID changes for data created on the client
 
@@ -507,8 +514,3 @@ The uid of the affected data record and the corresponding operation is available
 Notify users about failures/collisions
 It’s best to notify users about failures and collisions using the remote_update_failed and collision_detected events. 
 The data could roll back to the value that is valid in the cloud. So it may look like the local user change is discarded without some sort of notifications.
-
-== References
-
-A web sequence diagram for the sync framework
-Useful test cases to verify the sync framework
