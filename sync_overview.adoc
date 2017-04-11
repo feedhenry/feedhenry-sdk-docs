@@ -108,19 +108,21 @@ See the link:#sync-loop-considerations[Considerations] section below if changing
 +
 [source,javascript]
 ----
-var fhapi = require("fh-mbaas-api");
+var fh = require("fh-mbaas-api");
 var datasetId = "myShoppingList";
 
 var options = {
   "sync_frequency": 10
 };
 
-fhapi.sync.init(datasetId, options, function(err) {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log('sync inited');
-  }
+fh.events.on('sync:ready', function() {
+  fh.sync.init(datasetId, options, function(err) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('sync inited');
+    }
+  });
 });
 ----
 +
