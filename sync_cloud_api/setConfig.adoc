@@ -129,6 +129,24 @@ The stats data will be saved in Redis and will only have minimum performance ove
 *** Type: Number
 *** Default: null
 
+** *metricsReportConcurrency*
+*** Description: Specify the concurrency value for the metrics client when send metrics data.
++
+If there are many concurrent workers, there will be a lot more metrics data generated. 
+You should consider increasing the value of the configuration as the metrics data will be held in memory which will increase the memory usage of the app.
+*** Type: Number
+*** Default: 10
+
+** *datasetClientCleanerRetentionPeriod*
+*** Description: Specify the maximum retention time of an inactive datasetClient. Any inactive datasetClient that is older than this will be removed, along with it's records saved locally by the sync server.
+*** Type: String
+*** Default: '24h'
+
+** *datasetClientCleanerCheckFrequency*
+*** Description: Specify the running frequency the datasetClientCleaner
+*** Type: String
+*** Default: '1h'
+
 ** *queueMessagesToKeep*
 *** Description: The queue messages are saved in the database.
 When a message is acknowledged, it will not be removed from database immediately for debug purpose.
